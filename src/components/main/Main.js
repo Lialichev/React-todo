@@ -5,47 +5,54 @@ import {todoList} from '../../services/todoList';
 import {checkUser} from '../../services/user.js';
 
 class Main extends Component {
-  state = {
-    list: ['hi', 'by'],
-    login: false,
-    userName: ''
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      list: null,
+      user: null
+    };
+
+    this.days = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
+    this.currentDay = new Date().getDay() - 1;
+  }
 
   componentDidMount() {
     todoList()
-      .then(list => this.setState({list}))
+      .then(list => this.setState({ list }));
+    checkUser()
+      .then(user => this.setState({ user }))
   }
 
   onLogin = (user) => {
-    this.setState({
-      login: true,
-      userName: user.firstName
-    });
+    this.setState({ user });
   };
 
   render() {
-    const {list, login, userName} = this.state;
-    console.log(list);
+    const { list, user } = this.state;
 
     return (
       <main>
         <h1>React Todo</h1>
         {
-          login
-            ? <h3>Hello {userName}!</h3>
+          user
+            ? <h3>Hello !</h3>
             : <Login onLogin={this.onLogin}/>
         }
-        <Tabs>
-          {
-            list.map(e => {
-              return (
-                <Tab title="Tab 1" key={e}>
-                  <h3>Tab header 1</h3>
-                </Tab>
-              );
-            })
-          }
-        </Tabs>
+        {
+          list
+            ? <Tabs selectedIndex={this.currentDay}>
+              {
+                list.map((elem, index) => (
+                  <Tab title={this.days[index]} key={index}>
+                    <TodoList list={elem}/>
+                    <a href="/">Добавить новый</a>
+                  </Tab>
+                ))
+              }
+              </Tabs>
+            : 'Loading...'
+        }
       </main>
     );
   }
