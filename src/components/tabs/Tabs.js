@@ -4,6 +4,12 @@ import { Tab } from './Tab';
 import './tabs.scss';
 
 export class Tabs extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedIndex !== this.props.selectedIndex) {
+      this.setState({ currentIndex: nextProps.selectedIndex || 0 })
+    }
+  }
+
   state = {
     currentIndex: this.props.selectedIndex || 0
   };

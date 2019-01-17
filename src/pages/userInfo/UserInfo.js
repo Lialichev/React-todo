@@ -9,11 +9,12 @@ class UserInfo extends Component {
   };
 
   static defaultProps = {
-    info: {}
+    info: {},
+    user: {}
   };
 
   render() {
-    const {user = {}, info} = this.props;
+    const {user, info} = this.props;
 
     return (
       <div className="userInfo">
