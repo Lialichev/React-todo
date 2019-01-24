@@ -1,0 +1,19 @@
+@import "../../variables";
+
+.userInfo {
+  background-color: #c3c3c3;
+  padding: 15px;
+
+  .bold {
+    font-weight: bold;
+  }
+
+  &__data {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  a {
+    color: black;
+  }
+}
